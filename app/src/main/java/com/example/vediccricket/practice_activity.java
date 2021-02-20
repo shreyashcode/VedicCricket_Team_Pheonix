@@ -28,7 +28,7 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
     protected void onPostResume() {
         super.onPostResume();
         coins.setText(String.valueOf(Common.coins));
-        level.setText("Level :"+String.valueOf(Common.maxLvl));
+        level.setText("Level : "+String.valueOf(Common.maxLvl));
         currentTopic.setText(Topics.get(Common.maxLvl).getTopicName());
     }
 

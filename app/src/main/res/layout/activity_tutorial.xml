@@ -19,6 +19,18 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/coinsReward"
+        app:lottie_autoPlay="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/coins" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/collect"
         android:layout_width="wrap_content"

@@ -97,7 +97,7 @@
                 android:padding="3dp"
                 android:fontFamily="@font/baloo_bhai"
                 android:textSize="20sp"
-                android:text="Present Topic: " />
+                android:text="Next Topic: " />
 <!--            <LinearLayout-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="match_parent"-->

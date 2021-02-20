@@ -3,6 +3,7 @@ package com.example.vediccricket;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.animation.Animator;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import static android.view.View.VISIBLE;
@@ -22,13 +24,17 @@ public class TutorialActivity extends AppCompatActivity {
     private MediaController mediaController;
     private String TopicName;
     private int coins;
+    private LottieAnimationView coinsReward;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
 
+        coinsReward = findViewById(R.id.coinsReward);
+
         TopicName = getIntent().getStringExtra("Topic");
         coins = getIntent().getIntExtra("Reward", 0);
+
         Toast.makeText(TutorialActivity.this, TopicName+" "+coins, Toast.LENGTH_SHORT).show();
         videoView = findViewById(R.id.video);
         collect = findViewById(R.id.collect);
@@ -37,26 +43,40 @@ public class TutorialActivity extends AppCompatActivity {
         mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
-        videoView.setOnCompletionListener(mp -> collect.setVisibility(VISIBLE));
 
-        videoView.setOnPreparedListener(mp -> Toast.makeText(TutorialActivity.this, "Length: "+videoView.getDuration(), Toast.LENGTH_SHORT).show());
+        videoView.setOnCompletionListener(mp -> {
+            videoView.setVisibility(View.INVISIBLE);
+            coinsReward.setVisibility(VISIBLE);
+            coinsReward.setProgress(0);
+            Log.d("HeyThis", "OnComplete");
+        });
 
-        collect.setOnClickListener(new View.OnClickListener() {
+        coinsReward.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(TutorialActivity.this, "Collected", Toast.LENGTH_SHORT).show();
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
                 //update the activity on firebase
                 if(practice_activity.isLearned.get(TopicName) == false)
                 {
-                    Log.d("Tutorial", "Learned "+TopicName+" "+Common.coins+coins);
                     Common.coins = Common.coins+coins;
                     Common.maxLvl++;
                     practice_activity.isLearned.put(TopicName, true);
                 }
-                else
-                {
-                    Log.d("Tutorial", "Not learned "+TopicName);
-                }
+                finish();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
             }
         });
 
