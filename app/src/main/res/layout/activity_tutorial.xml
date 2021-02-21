@@ -8,6 +8,18 @@
     android:background="@color/white"
     tools:context=".TutorialActivity">
 
+    <TextView
+        android:id="@+id/topic_name_view"
+        android:fontFamily="@font/baloo_bhai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NAME"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

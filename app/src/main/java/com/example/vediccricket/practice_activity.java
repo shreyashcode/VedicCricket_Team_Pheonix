@@ -27,9 +27,9 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        coins.setText(String.valueOf(Common.coins));
-        level.setText("Level : "+String.valueOf(Common.maxLvl));
-        currentTopic.setText(Topics.get(Common.maxLvl).getTopicName());
+        coins.setText(String.valueOf(User.coins));
+        level.setText("Level : "+User.level);
+        currentTopic.setText(Topics.get(User.level).getTopicName());
     }
 
 
@@ -39,14 +39,14 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.practice_activity);
 
-        // get from firebase
-        Common.maxLvl = 0;
+        Log.d("USER_1", User.name+" "+User.coins+" "+User.level);
+
         coins = findViewById(R.id.RewardCoins);
-        coins.setText(String.valueOf(Common.coins));
+        coins.setText(String.valueOf(User.coins));
         recyclerView = findViewById(R.id.recyclerView);
         level = findViewById(R.id.level);
         currentTopic = findViewById(R.id.currentTopic);
-        level.setText("Level :"+String.valueOf(Common.maxLvl));
+        level.setText("Level :"+User.level);
 
         Topics.add(new PracticeModel("Multiplication", 1, 10, false));
         Topics.add(new PracticeModel("Division", 2, 20, false));
@@ -110,9 +110,9 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
         Intent intent = new Intent(this, TutorialActivity.class);
         intent.putExtra("Topic", Topics.get(position).getTopicName());
         intent.putExtra("Reward", Topics.get(position).getRewardCoins());
-        if(Topics.get(position).getLevel()-1 > Common.maxLvl)
+        if(Topics.get(position).getLevel()-1 > User.level)
         {
-            int maxLvl = Common.maxLvl+1;
+            int maxLvl = User.level+1;
             Toast.makeText(practice_activity.this, "Please complete level "+maxLvl, Toast.LENGTH_SHORT).show();
             return;
         }

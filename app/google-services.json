@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "328930670021",
+    "project_id": "vedic-cricket",
+    "storage_bucket": "vedic-cricket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328930670021:android:00ff8c9a33eef053ff07ac",
+        "android_client_info": {
+          "package_name": "com.example.vediccricket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328930670021-u2qbcg049d134la13hpqc80p1fshaqfc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_IWQdUdP54hs0mvvk6FM_blsJ5rLE6eg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328930670021-u2qbcg049d134la13hpqc80p1fshaqfc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

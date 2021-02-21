@@ -9,11 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.view.View.VISIBLE;
 
@@ -24,13 +29,17 @@ public class TutorialActivity extends AppCompatActivity {
     private MediaController mediaController;
     private String TopicName;
     private int coins;
+    private TextView topic_name;
     private LottieAnimationView coinsReward;
+    private FirebaseFirestore firebaseFirestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
 
         coinsReward = findViewById(R.id.coinsReward);
+        topic_name = findViewById(R.id.topic_name_view);
+        topic_name.setText(TopicName);
 
         TopicName = getIntent().getStringExtra("Topic");
         coins = getIntent().getIntExtra("Reward", 0);
@@ -44,10 +53,23 @@ public class TutorialActivity extends AppCompatActivity {
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
 
+        videoView.setOnClickListener(v->{
+            if(topic_name.getVisibility() == VISIBLE){
+                topic_name.setVisibility(View.INVISIBLE);
+            }else{
+                topic_name.setVisibility(View.INVISIBLE);
+            }
+        });
+
         videoView.setOnCompletionListener(mp -> {
             videoView.setVisibility(View.INVISIBLE);
-            coinsReward.setVisibility(VISIBLE);
-            coinsReward.setProgress(0);
+            if(User.topicsLearned.contains(TopicName) == false) {
+                coinsReward.setVisibility(VISIBLE);
+            }
+            else{
+                finish();
+            }
+            //coinsReward.setProgress(0);
             Log.d("HeyThis", "OnComplete");
         });
 
@@ -60,11 +82,12 @@ public class TutorialActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 //update the activity on firebase
-                if(practice_activity.isLearned.get(TopicName) == false)
+                if(User.topicsLearned.contains(TopicName) == false)
                 {
-                    Common.coins = Common.coins+coins;
-                    Common.maxLvl++;
-                    practice_activity.isLearned.put(TopicName, true);
+                    User.coins = User.coins+coins;
+                    User.level++;
+                    User.topicsLearned.add(TopicName);
+                    updateOnFirebase();
                 }
                 finish();
             }
@@ -80,6 +103,19 @@ public class TutorialActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void updateOnFirebase(){
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        Map<String, String> map = new HashMap<>();
+        map.put("name", TopicName);
+        firebaseFirestore.collection("user").document(User.name).collection("topics_learned").document(TopicName)
+                .set(map);
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("coins", User.coins);
+        map1.put("level", User.level);
+        map1.put("name", User.name);
+        firebaseFirestore.collection("user").document(User.name).set(map1);
     }
 
     @Override
