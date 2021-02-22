@@ -2,35 +2,31 @@ package com.example.vediccricket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MainActivity extends AppCompatActivity {
+    private ImageView practice;
+    private ImageView tournament;
+    private ImageView leaderboard;
+    private Intent intent;
 
-    public LottieAnimationView lottieAnimationView;
-    public Button pause;
-    public int isRunning = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        lottieAnimationView = findViewById(R.id.animation);
-        pause = findViewById(R.id.pause);
-        pause.setOnClickListener(v -> {
-            if(isRunning == 0)
-            {
-                lottieAnimationView.pauseAnimation();
-                isRunning=1;
-            }
-            else
-            {
-                lottieAnimationView.resumeAnimation();
-                isRunning=0;
-            }
-        });
+        setContentView(R.layout.activity_home);
+
+        practice = findViewById(R.id.practice);
+        tournament = findViewById(R.id.tournament);
+        leaderboard = findViewById(R.id.leaderboard);
+
+        practice.setOnClickListener(this);
+        tournament.setOnClickListener(this);
+        leaderboard.setOnClickListener(this);
     }
 
     @Override
@@ -68,4 +64,23 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.practice:
+                    intent = new Intent(HomeActivity.this, practice_activity.class);
+                    break;
+
+            case R.id.tournament:
+                    intent = new Intent(HomeActivity.this, MainGameActivity.class);
+                    break;
+
+            case R.id.leaderboard:
+                    intent = getIntent();
+                    finish();
+                    Toast.makeText(HomeActivity.this, "You won!", Toast.LENGTH_SHORT).show();
+                    break;
+        }
+        startActivity(intent);
+    }
 }

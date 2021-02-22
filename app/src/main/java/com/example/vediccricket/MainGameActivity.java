@@ -5,31 +5,57 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.airbnb.lottie.LottieAnimationView;
+public class MainGameActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
+    private TextView runs;
+    private TextView rrr;
+    private TextView overs;
+    private TextView fours;
+    private TextView sixes;
+    private Button six;
+    private Button four;
+    private Button wicket;
+    private int run_scored=0;
+    private int wicket_=0;
+    private int overs_=0;
 
-    public LottieAnimationView lottieAnimationView;
-    public Button pause;
-    public int isRunning = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        lottieAnimationView = findViewById(R.id.animation);
-        pause = findViewById(R.id.pause);
-        pause.setOnClickListener(v -> {
-            if(isRunning == 0)
-            {
-                lottieAnimationView.pauseAnimation();
-                isRunning=1;
-            }
-            else
-            {
-                lottieAnimationView.resumeAnimation();
-                isRunning=0;
-            }
+        setContentView(R.layout.activity_main_game);
+        runs = findViewById(R.id.runs);
+        rrr = findViewById(R.id.rrr);
+        overs = findViewById(R.id.overs);
+        fours = findViewById(R.id.fours);
+        sixes = findViewById(R.id.sixes);
+
+        six = findViewById(R.id.six);
+        four = findViewById(R.id.four);
+        wicket = findViewById(R.id.wicket);
+
+        six.setOnClickListener(v->{
+            run_scored = run_scored+6;
+            overs_++;
+            runs.setText(run_scored+"-"+wicket_);
+            sixes.setText("SIX "+run_scored/6+"");
+            overs.setText("OVERS "+overs_);
+        });
+
+        four.setOnClickListener(v->{
+            run_scored = run_scored+4;
+            overs_++;
+            runs.setText(run_scored+"-"+wicket_);
+            overs.setText("OVERS "+overs_);
+            fours.setText("FOURS "+ run_scored/4+"");
+        });
+
+        wicket.setOnClickListener(v->{
+            wicket_++;
+            overs_++;
+            runs.setText(run_scored+"-"+wicket_);
         });
     }
 

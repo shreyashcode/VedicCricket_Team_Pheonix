@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +28,7 @@ public class SplashScreen extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private String isLoggedIn;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,26 +36,33 @@ public class SplashScreen extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = sharedPreferences.edit();
-
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
         isLoggedIn = isLoggedIn();
         Toast.makeText(this, isLoggedIn, Toast.LENGTH_SHORT).show();
         Log.d("USER", isLoggedIn);
         if(isLoggedIn.equals("NA") == true) {
-            Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
-            finish();
-            startActivity(intent);
-        }
-        else{
-            setUserStatistics();
-            new Handler().postDelayed(new Runnable(){
+                        new Handler().postDelayed(new Runnable(){
                 @Override
                 public void run() {
                     Log.d("USER_2", User.name+" "+User.coins+" "+User.level);
-                    Intent intent = new Intent(SplashScreen.this, practice_activity.class);
+                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                     finish();
                     startActivity(intent);
                 }
-            }, 3000);
+            }, 1500);
+        }
+        else{
+            setUserStatistics();
+//            new Handler().postDelayed(new Runnable(){
+//                @Override
+//                public void run() {
+//                    Log.d("USER_2", User.name+" "+User.coins+" "+User.level);
+//                    Intent intent = new Intent(SplashScreen.this, practice_activity.class);
+//                    finish();
+//                    startActivity(intent);
+//                }
+//            }, 3000);
         }
 
 
@@ -94,10 +104,10 @@ public class SplashScreen extends AppCompatActivity {
                         }
                     }
                 }).addOnSuccessListener(command -> {
-//            Log.d("USER_2", User.name+" "+User.coins+" "+User.level);
-//            Intent intent = new Intent(SplashScreen.this, practice_activity.class);
-//            finish();
-//            startActivity(intent);
+            Log.d("USER_2", User.name+" "+User.coins+" "+User.level);
+            Intent intent = new Intent(SplashScreen.this, HomeActivity.class);
+            finish();
+            startActivity(intent);
         });
     }
 

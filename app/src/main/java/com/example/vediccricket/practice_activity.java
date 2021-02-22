@@ -23,16 +23,18 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
     public TextView coins;
     public TextView level;
     public TextView currentTopic;
-
+    public PracticeAdapter practiceAdapter;
     @Override
     protected void onPostResume() {
         super.onPostResume();
         coins.setText(String.valueOf(User.coins));
         level.setText("Level : "+User.level);
         currentTopic.setText(Topics.get(User.level).getTopicName());
+        practiceAdapter.notifyDataSetChanged();
+//        for(String e: User.topicsLearned){
+//            Log.d("USER", e);
+//        }
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,14 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
         setContentView(R.layout.practice_activity);
 
         Log.d("USER_1", User.name+" "+User.coins+" "+User.level);
-
         coins = findViewById(R.id.RewardCoins);
         coins.setText(String.valueOf(User.coins));
         recyclerView = findViewById(R.id.recyclerView);
         level = findViewById(R.id.level);
         currentTopic = findViewById(R.id.currentTopic);
         level.setText("Level :"+User.level);
+
+        practiceAdapter = new PracticeAdapter(Topics, this);
 
         Topics.add(new PracticeModel("Multiplication", 1, 10, false));
         Topics.add(new PracticeModel("Division", 2, 20, false));
@@ -60,7 +63,7 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
         Topics.add(new PracticeModel("Ch 7", 10, 100, false));
         Topics.add(new PracticeModel("Ch 8", 11, 110, false));
         Topics.add(new PracticeModel("Ch 9", 12, 120, false));
-        recyclerView.setAdapter(new PracticeAdapter(Topics, this));
+        recyclerView.setAdapter(practiceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         currentTopic.setText(Topics.get(Common.maxLvl).getTopicName());
         // get it from firebase

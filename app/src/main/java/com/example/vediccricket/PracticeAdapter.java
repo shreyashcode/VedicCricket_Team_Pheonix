@@ -1,5 +1,6 @@
 package com.example.vediccricket;
 
+import android.graphics.Color;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -32,6 +34,12 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PracticeModel practiceModel = Topics.get(position);
+        if(User.topicsLearned.contains(practiceModel.getTopicName())){
+            Log.d("USER", practiceModel.getTopicName()+"HERE");
+            holder.backCard.setCardBackgroundColor(Color.parseColor("#ABE849"));
+        }else{
+            holder.backCard.setCardBackgroundColor(Color.parseColor("#F3F7F3"));
+        }
         Log.d("Practice", "HERE"+practiceModel.getTopicName()+" "+practiceModel.getLevel());
         holder.lvl.setText(""+practiceModel.getLevel());
         holder.name.setText(practiceModel.getTopicName());
@@ -48,9 +56,11 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
         public TextView lvl;
         public TextView name;
         public TextView reward;
+        public CardView backCard;
         public OnClickListenerInterface onClickListenerInterface;
         public ViewHolder(@NonNull View itemView, OnClickListenerInterface onClickListenerInterface) {
             super(itemView);
+            backCard = itemView.findViewById(R.id.background);
             lvl = itemView.findViewById(R.id.lvl);
             name = itemView.findViewById(R.id.topic_name);
             reward = itemView.findViewById(R.id.reward);

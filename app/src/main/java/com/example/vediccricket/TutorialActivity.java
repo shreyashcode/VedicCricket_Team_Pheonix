@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.animation.Animator;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
@@ -25,7 +26,6 @@ import static android.view.View.VISIBLE;
 public class TutorialActivity extends AppCompatActivity {
 
     private VideoView videoView;
-    private CardView collect;
     private MediaController mediaController;
     private String TopicName;
     private int coins;
@@ -39,37 +39,43 @@ public class TutorialActivity extends AppCompatActivity {
 
         coinsReward = findViewById(R.id.coinsReward);
         topic_name = findViewById(R.id.topic_name_view);
-        topic_name.setText(TopicName);
 
         TopicName = getIntent().getStringExtra("Topic");
         coins = getIntent().getIntExtra("Reward", 0);
 
         Toast.makeText(TutorialActivity.this, TopicName+" "+coins, Toast.LENGTH_SHORT).show();
         videoView = findViewById(R.id.video);
-        collect = findViewById(R.id.collect);
         videoView.setVideoPath("android.resource://"+getPackageName()+"/"+R.raw.video1);
         videoView.start();
         mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
-
         videoView.setOnClickListener(v->{
             if(topic_name.getVisibility() == VISIBLE){
                 topic_name.setVisibility(View.INVISIBLE);
             }else{
-                topic_name.setVisibility(View.INVISIBLE);
+                topic_name.setVisibility(View.VISIBLE);
             }
         });
 
-        videoView.setOnCompletionListener(mp -> {
+        videoView.setOnCompletionListener(v -> {
             videoView.setVisibility(View.INVISIBLE);
             if(User.topicsLearned.contains(TopicName) == false) {
+                Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), "You earned "+coins+" coins!", Snackbar.LENGTH_LONG);
+                snackbar.show();
                 coinsReward.setVisibility(VISIBLE);
             }
             else{
-                finish();
+                Snackbar snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), "You already collected coins for this, oops!", Snackbar.LENGTH_LONG);
+                snackbar.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 1500);
             }
-            //coinsReward.setProgress(0);
+            coinsReward.setProgress(0);
             Log.d("HeyThis", "OnComplete");
         });
 
