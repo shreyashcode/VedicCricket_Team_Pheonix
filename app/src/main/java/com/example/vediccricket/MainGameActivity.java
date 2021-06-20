@@ -26,6 +26,8 @@ public class MainGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
+
+
         runs = findViewById(R.id.runs);
         rrr = findViewById(R.id.rrr);
         overs = findViewById(R.id.overs);

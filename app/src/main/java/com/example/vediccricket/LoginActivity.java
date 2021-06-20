@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // in splash screen, check if this is a new user if not then give intent to this activity else give intent to next activity
         username = findViewById(R.id.username);
         login = findViewById(R.id.login);

@@ -41,6 +41,7 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.practice_activity);
 
+
         Log.d("USER_1", User.name+" "+User.coins+" "+User.level);
         coins = findViewById(R.id.RewardCoins);
         coins.setText(String.valueOf(User.coins));

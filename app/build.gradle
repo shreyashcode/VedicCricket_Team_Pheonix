@@ -42,6 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
+    implementation "com.jaeger.statusbarutil:library:1.5.1"
     def lottieVersion = "3.6.1"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 }

@@ -33,9 +33,10 @@ public class TutorialActivity extends AppCompatActivity {
     private LottieAnimationView coinsReward;
     private FirebaseFirestore firebaseFirestore;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+
 
         coinsReward = findViewById(R.id.coinsReward);
         topic_name = findViewById(R.id.topic_name_view);
