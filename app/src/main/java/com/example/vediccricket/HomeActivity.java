@@ -76,9 +76,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     break;
 
             case R.id.leaderboard:
-                    intent = getIntent();
-                    finish();
-                    Toast.makeText(HomeActivity.this, "You won!", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
                     break;
         }
         startActivity(intent);

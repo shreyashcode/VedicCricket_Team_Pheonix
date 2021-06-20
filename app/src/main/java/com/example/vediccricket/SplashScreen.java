@@ -37,8 +37,10 @@ public class SplashScreen extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = sharedPreferences.edit();
+
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
+
         isLoggedIn = isLoggedIn();
         Toast.makeText(this, isLoggedIn, Toast.LENGTH_SHORT).show();
         Log.d("USER", isLoggedIn);
@@ -85,6 +87,7 @@ public class SplashScreen extends AppCompatActivity {
                           Log.d("USER", User.name+" "+User.coins+" "+User.level);
                     }
                 } else {
+                    // make toast relevant -> add "message-> " "Turn ON your data connection!"
                     Toast.makeText(SplashScreen.this, task.getException()+"", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -112,8 +115,7 @@ public class SplashScreen extends AppCompatActivity {
         });
     }
 
-    private String isLoggedIn()
-    {
+    private String isLoggedIn() {
         return sharedPreferences.getString("userName", "NA");
     }
 }

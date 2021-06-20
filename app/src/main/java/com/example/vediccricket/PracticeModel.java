@@ -1,5 +1,7 @@
 package com.example.vediccricket;
 
+import androidx.annotation.NonNull;
+
 public class PracticeModel {
     public String TopicName;
     public int level;
@@ -11,6 +13,12 @@ public class PracticeModel {
         this.level = level;
         this.rewardCoins = rewardCoins;
         this.isLearned = isLearned;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return TopicName + " " + rewardCoins;
     }
 
     public String getTopicName() {

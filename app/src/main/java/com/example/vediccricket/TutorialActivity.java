@@ -89,8 +89,8 @@ public class TutorialActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 //update the activity on firebase
-                if(User.topicsLearned.contains(TopicName) == false)
-                {
+                if(User.topicsLearned.contains(TopicName) == false) {
+                    // new topic learned
                     User.coins = User.coins+coins;
                     User.level++;
                     User.topicsLearned.add(TopicName);
@@ -101,7 +101,7 @@ public class TutorialActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                Toast.makeText(TutorialActivity.this, "Animation Canceled", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -118,6 +118,7 @@ public class TutorialActivity extends AppCompatActivity {
         map.put("name", TopicName);
         firebaseFirestore.collection("user").document(User.name).collection("topics_learned").document(TopicName)
                 .set(map);
+
         Map<String, Object> map1 = new HashMap<>();
         map1.put("coins", User.coins);
         map1.put("level", User.level);

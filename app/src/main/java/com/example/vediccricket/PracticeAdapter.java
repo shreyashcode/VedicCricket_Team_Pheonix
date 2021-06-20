@@ -18,8 +18,7 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
 
     protected ArrayList<PracticeModel> Topics;
     protected OnClickListenerInterface onClickListenerInterface;
-    public PracticeAdapter(ArrayList<PracticeModel> Topics, OnClickListenerInterface onClickListenerInterface)
-    {
+    public PracticeAdapter(ArrayList<PracticeModel> Topics, OnClickListenerInterface onClickListenerInterface) {
         this.Topics = Topics;
         this.onClickListenerInterface = onClickListenerInterface;
     }
@@ -34,16 +33,17 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PracticeModel practiceModel = Topics.get(position);
-        if(User.topicsLearned.contains(practiceModel.getTopicName())){
+        //User.topicsLearned.contains(practiceModel.getTopicName())
+        if(practiceModel.isLearned == true){
             Log.d("USER", practiceModel.getTopicName()+"HERE");
             holder.backCard.setCardBackgroundColor(Color.parseColor("#ABE849"));
         }else{
             holder.backCard.setCardBackgroundColor(Color.parseColor("#F3F7F3"));
         }
         Log.d("Practice", "HERE"+practiceModel.getTopicName()+" "+practiceModel.getLevel());
-        holder.lvl.setText(""+practiceModel.getLevel());
+        holder.lvl.setText(String.valueOf(practiceModel.getLevel()));
         holder.name.setText(practiceModel.getTopicName());
-        holder.reward.setText(practiceModel.getRewardCoins()+"");
+        holder.reward.setText(String.valueOf(practiceModel.getRewardCoins()));
     }
 
     @Override
@@ -74,8 +74,7 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
         }
     }
 
-    public interface OnClickListenerInterface
-    {
+    public interface OnClickListenerInterface {
         void onClick(int position);
     }
 }

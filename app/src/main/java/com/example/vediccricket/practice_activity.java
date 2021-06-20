@@ -1,5 +1,6 @@
 package com.example.vediccricket;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,69 +10,92 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class practice_activity extends AppCompatActivity implements PracticeAdapter.OnClickListenerInterface {
 
     public RecyclerView recyclerView;
-    public ArrayList<PracticeModel> Topics = new ArrayList();
+    public ArrayList<PracticeModel> Topics = new ArrayList<>();
     public static HashMap<String, Boolean> isLearned = new HashMap<>();
     public TextView coins;
     public TextView level;
     public TextView currentTopic;
     public PracticeAdapter practiceAdapter;
+    public FirebaseFirestore firebaseFirestore;
+    public ProgressBar progressBar;
+
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        coins.setText(String.valueOf(User.coins));
-        level.setText("Level : "+User.level);
-        currentTopic.setText(Topics.get(User.level).getTopicName());
-        practiceAdapter.notifyDataSetChanged();
-//        for(String e: User.topicsLearned){
-//            Log.d("USER", e);
-//        }
+        progressBar.setVisibility(View.VISIBLE);
+        populateTopics();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.practice_activity);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        progressBar = findViewById(R.id.loading);
 
-
-        Log.d("USER_1", User.name+" "+User.coins+" "+User.level);
         coins = findViewById(R.id.RewardCoins);
-        coins.setText(String.valueOf(User.coins));
         recyclerView = findViewById(R.id.recyclerView);
         level = findViewById(R.id.level);
         currentTopic = findViewById(R.id.currentTopic);
-        level.setText("Level :"+User.level);
 
-        practiceAdapter = new PracticeAdapter(Topics, this);
+        populateTopics();
 
-        Topics.add(new PracticeModel("Multiplication", 1, 10, false));
-        Topics.add(new PracticeModel("Division", 2, 20, false));
-        Topics.add(new PracticeModel("Powers", 3, 30, false));
-        Topics.add(new PracticeModel("Ch 1", 4, 40, false));
-        Topics.add(new PracticeModel("Ch 2", 5, 50, false));
-        Topics.add(new PracticeModel("Ch 3", 6, 60, false));
-        Topics.add(new PracticeModel("Ch 4", 7, 70, false));
-        Topics.add(new PracticeModel("Ch 5", 8, 80, false));
-        Topics.add(new PracticeModel("Ch 6", 9, 90, false));
-        Topics.add(new PracticeModel("Ch 7", 10, 100, false));
-        Topics.add(new PracticeModel("Ch 8", 11, 110, false));
-        Topics.add(new PracticeModel("Ch 9", 12, 120, false));
-        recyclerView.setAdapter(practiceAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        currentTopic.setText(Topics.get(Common.maxLvl).getTopicName());
-        // get it from firebase
-        for(PracticeModel e: Topics)
-        {
+        for(PracticeModel e: Topics) {
             isLearned.put(e.getTopicName(), e.isLearned());
         }
+    }
+
+    public void populateTopics(){
+        CollectionReference collectionReference = firebaseFirestore.collection("topics");
+        collectionReference.get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Topics = new ArrayList<>();
+                        for(QueryDocumentSnapshot document: task.getResult()){
+                            PracticeModel practice_ = new PracticeModel(document.get("topic_name").toString(),
+                                    Integer.parseInt(document.get("level").toString()),
+                                    Integer.parseInt(document.get("level").toString()),
+                                    false);
+                            if(User.level >= practice_.level){
+                                practice_.isLearned = true;
+                            }
+                            Log.d("SHREYASH: ", practice_.toString());
+
+                            Topics.add(practice_);
+                        }
+                        Collections.sort(Topics, (o1, o2) -> o1.level-o2.level);
+                        coins.setText(String.valueOf(User.coins));
+                        level.setText("Level : "+User.level);
+                        currentTopic.setText(Topics.get(User.level).getTopicName());
+                        progressBar.setVisibility(View.GONE);
+                        practiceAdapter = new PracticeAdapter(Topics, this);
+                        recyclerView.setAdapter(practiceAdapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                        practiceAdapter.notifyDataSetChanged();
+                        Log.d("SHREYASH:", "COMPLETED");
+                    }
+                });
     }
 
     @Override
@@ -114,10 +138,10 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
         Intent intent = new Intent(this, TutorialActivity.class);
         intent.putExtra("Topic", Topics.get(position).getTopicName());
         intent.putExtra("Reward", Topics.get(position).getRewardCoins());
-        if(Topics.get(position).getLevel()-1 > User.level)
-        {
-            int maxLvl = User.level+1;
-            Toast.makeText(practice_activity.this, "Please complete level "+maxLvl, Toast.LENGTH_SHORT).show();
+
+        if(Topics.get(position).getLevel()-1 > User.level) {
+            int maxLvl_ = User.level+1;
+            Toast.makeText(practice_activity.this, "Please complete level "+maxLvl_, Toast.LENGTH_SHORT).show();
             return;
         }
         startActivity(intent);

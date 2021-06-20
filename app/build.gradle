@@ -45,4 +45,7 @@ dependencies {
     implementation "com.jaeger.statusbarutil:library:1.5.1"
     def lottieVersion = "3.6.1"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation "com.google.firebase:firebase-firestore:23.0.1"
+    implementation "com.firebaseui:firebase-ui-auth:3.0.0"
+    implementation 'com.firebaseui:firebase-ui-firestore:6.1.0'
 }

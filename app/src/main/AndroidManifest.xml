@@ -11,12 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VedicCricket">
-        <activity android:name=".HomeActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".LeaderboardActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainGameActivity"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="landscape">
