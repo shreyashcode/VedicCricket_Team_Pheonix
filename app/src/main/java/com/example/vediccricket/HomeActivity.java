@@ -3,10 +3,14 @@ package com.example.vediccricket;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.vediccricket.Service.BackgroundMusicService;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -14,11 +18,51 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView tournament;
     private ImageView leaderboard;
     private Intent intent;
+    private Intent musicIntent;
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer backgroundMusic;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("SHREYASH1", "ONSTART");
+//        Toast.makeText(this, "ONSTART", Toast.LENGTH_SHORT).show();
+//        startService(new Intent(this, BackgroundMusicService.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("SHREYASH1: ", "ONSTOP");
+//        Toast.makeText(this, "ONSTOP", Toast.LENGTH_SHORT).show();
+//        stopService(new Intent(this, BackgroundMusicService.class));
+    }
+
+    public void onResume() {
+        super.onResume();
+        Log.d("SHREYASH1:", "ONRESUME");
+        startService(musicIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("SHREYASH1", "ONPAUSE");
+//        Toast.makeText(this, "OnPause: ", Toast.LENGTH_SHORT).show();
+        stopService(musicIntent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Toast.makeText(this, "STARTED", Toast.LENGTH_SHORT).show();
+//        startService(new Intent(this, BackgroundMusicService.class));
+        musicIntent = new Intent(this, BackgroundMusicService.class);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.click);
+        backgroundMusic = MediaPlayer.create(this, R.raw.backgmusic);
+//        backgroundMusic.start();
 
         practice = findViewById(R.id.practice);
         tournament = findViewById(R.id.tournament);
@@ -66,6 +110,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        mediaPlayer.start();
         switch(v.getId()){
             case R.id.practice:
                     intent = new Intent(HomeActivity.this, practice_activity.class);
@@ -79,6 +124,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
                     break;
         }
+//        Common.seekTo = backgroundMusic.getCurrentPosition();
+//        backgroundMusic.stop();
         startActivity(intent);
+        overridePendingTransition(R.anim.down_animation, R.anim.up_animation);
     }
 }

@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.vediccricket.Service.BackgroundMusicService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -39,6 +42,7 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
     public PracticeAdapter practiceAdapter;
     public FirebaseFirestore firebaseFirestore;
     public ProgressBar progressBar;
+    public Intent musicIntent;
 
     @Override
     protected void onPostResume() {
@@ -51,13 +55,20 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.practice_activity);
+        musicIntent = new Intent(this, BackgroundMusicService.class);
         firebaseFirestore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.loading);
 
+        ImageView imageView = findViewById(R.id.back);
         coins = findViewById(R.id.RewardCoins);
         recyclerView = findViewById(R.id.recyclerView);
         level = findViewById(R.id.level);
         currentTopic = findViewById(R.id.currentTopic);
+
+        imageView.setOnClickListener(v->{
+                finish();
+                overridePendingTransition(R.anim.down_animation, R.anim.up_animation);
+        });
 
         populateTopics();
 
@@ -145,5 +156,35 @@ public class practice_activity extends AppCompatActivity implements PracticeAdap
             return;
         }
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("SHREYASH1", "ONSTART");
+//        Toast.makeText(this, "ONSTART", Toast.LENGTH_SHORT).show();
+//        startService(new Intent(this, BackgroundMusicService.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("SHREYASH1: ", "ONSTOP");
+//        Toast.makeText(this, "ONSTOP", Toast.LENGTH_SHORT).show();
+//        stopService(new Intent(this, BackgroundMusicService.class));
+    }
+
+    public void onResume() {
+        super.onResume();
+        Log.d("SHREYASH1:", "ONRESUME");
+        startService(musicIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("SHREYASH1", "ONPAUSE");
+//        Toast.makeText(this, "OnPause: ", Toast.LENGTH_SHORT).show();
+        stopService(musicIntent);
     }
 }

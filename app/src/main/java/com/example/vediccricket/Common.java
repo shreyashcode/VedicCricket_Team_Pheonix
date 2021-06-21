@@ -7,4 +7,5 @@ public class Common
 {
     public static int coins;
     public static int maxLvl;
+    public static int seekTo;
 }

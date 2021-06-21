@@ -34,6 +34,7 @@
                 android:textColor="@color/cardview_dark_background"
                 android:layout_gravity="center"
                 android:text="Topic name"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,9 +44,9 @@
                     android:id="@+id/lvl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_bhai"
                     android:padding="9dp"
                     android:text="Level"
-                    android:fontFamily="@font/baloo_bhai"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -81,6 +82,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 <!--            <androidx.cardview.widget.CardView-->
 <!--                android:layout_width="680dp"-->
@@ -90,5 +92,12 @@
 <!--                android:layout_height="1dp"/>-->
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

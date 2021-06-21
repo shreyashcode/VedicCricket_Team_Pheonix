@@ -41,7 +41,7 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.ViewHo
             holder.backCard.setCardBackgroundColor(Color.parseColor("#F3F7F3"));
         }
         Log.d("Practice", "HERE"+practiceModel.getTopicName()+" "+practiceModel.getLevel());
-        holder.lvl.setText(String.valueOf(practiceModel.getLevel()));
+        holder.lvl.setText("Level: "+String.valueOf(practiceModel.getLevel()));
         holder.name.setText(practiceModel.getTopicName());
         holder.reward.setText(String.valueOf(practiceModel.getRewardCoins()));
     }

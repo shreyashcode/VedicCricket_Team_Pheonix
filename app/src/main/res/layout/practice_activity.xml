@@ -24,7 +24,9 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,96 +34,111 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        app:cardBackgroundColor="#558cff"
         android:layout_width="240dp"
         android:layout_height="match_parent"
+        app:cardBackgroundColor="#558cff"
         app:cardCornerRadius="17dp"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="3dp"
-            android:orientation="vertical"
-            android:layout_marginLeft="12dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:layout_gravity="center"
-                android:textSize="28sp"
-                android:textColor="@color/black"
-                android:text="Statistics"/>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="3dp">
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <TextView
-                    android:id="@+id/RewardCoins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="3dp"
+                    android:text="Statistics"
+                    android:textColor="@color/black"
+                    android:textSize="28sp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:id="@+id/RewardCoins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="13dp"
+                        android:layout_marginRight="13dp"
+                        android:fontFamily="@font/baloo_bhai"
+                        android:text="Coins"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="39dp"
+                        android:layout_height="39dp"
+                        android:src="@drawable/money" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/baloo_bhai"
-                    android:text="Coins"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="13dp"
-                    android:textSize="20sp"
-                    android:layout_marginRight="13dp" />
-                <ImageView
-                    android:layout_width="39dp"
-                    android:layout_height="39dp"
-                    android:src="@drawable/money"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:padding="3dp"
+                    android:text="Level:    "
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:fontFamily="@font/baloo_bhai"
-                android:textSize="20sp"
-                android:text="Level:    " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_bhai"
+                    android:padding="3dp"
+                    android:text="Rank:    "
+                    android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:fontFamily="@font/baloo_bhai"
-                android:textSize="20sp"
-                android:text="Rank:    " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_bhai"
+                    android:padding="3dp"
+                    android:text="Present Topic: "
+                    android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:fontFamily="@font/baloo_bhai"
-                android:textSize="20sp"
-                android:text="Present Topic: " />
-            <TextView
-                android:id="@+id/currentTopic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:fontFamily="@font/baloo_bhai"
-                android:textSize="20sp"
-                android:text="Next Topic: " />
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:padding="3dp"-->
-<!--                android:orientation="horizontal">-->
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:padding="9dp"-->
-<!--                    android:textSize="26sp"-->
-<!--                    android:text="Coins"/>-->
-<!--            </LinearLayout>-->
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/currentTopic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_bhai"
+                    android:padding="3dp"
+                    android:text="Next Topic: "
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:layout_gravity="end"
+                android:layout_margin="30dp"
+                android:src="@drawable/back_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

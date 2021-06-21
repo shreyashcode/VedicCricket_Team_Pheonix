@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -41,6 +42,13 @@ public class LeaderboardActivity extends AppCompatActivity {
         leader_rv = findViewById(R.id.leaderboard_rView);
         firebaseFirestore = FirebaseFirestore.getInstance();
         setLeaderRView();
+        ImageView imageView = findViewById(R.id.back);
+
+        imageView.setOnClickListener(v->{
+            finish();
+            overridePendingTransition(R.anim.down_animation, R.anim.up_animation);
+        });
+
 
 //
 //            adapter = new FirestoreRecyclerAdapter<Player, LeaderboardViewHolder>(response) {
@@ -76,7 +84,11 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     public void setLeaderRView(){
-        Query query = firebaseFirestore.collection("leaderboard")
+//        Query query = firebaseFirestore.collection("leaderboard")
+//                .orderBy("coins", Query.Direction.DESCENDING)
+//                .limit(15);
+
+        Query query = firebaseFirestore.collection("user")
                 .orderBy("coins", Query.Direction.DESCENDING)
                 .limit(15);
 

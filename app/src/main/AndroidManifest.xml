@@ -6,22 +6,25 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/main_trophy"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/main_trophy"
         android:supportsRtl="true"
         android:theme="@style/Theme.VedicCricket">
+
+        <service android:name=".Service.BackgroundMusicService"/>
+
         <activity android:name=".LeaderboardActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".MainGameActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".SplashScreen"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,16 +33,16 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".TutorialActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".practice_activity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="sensorLandscape" />
 
         <meta-data
             android:name="preloaded_fonts"
